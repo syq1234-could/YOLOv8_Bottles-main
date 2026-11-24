@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOLOv8 瓶子检测系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="page">
+        <section class="hero">
+            <div>
+                <p class="eyebrow">YOLOv8 Bottle Detection</p>
+                <h1>瓶子智能检测系统</h1>
+                <p class="subtitle">上传图片后，系统会调用本地 YOLOv8 模型识别透明瓶、有色瓶和垃圾/杂物。</p>
+            </div>
+            <div class="model-card">
+                <span>当前模型</span>
+                <strong>model/weights/best.pt</strong>
+            </div>
+        </section>
+
+        <section class="panel upload-panel">
+            <div id="dropZone" class="drop-zone">
+                <input id="imageInput" type="file" accept="image/*" multiple hidden>
+                <div class="upload-icon">+</div>
+                <h2>选择或拖入图片</h2>
+                <p>支持 JPG、JPEG、PNG、BMP、WEBP 格式</p>
+                <button id="chooseBtn" class="button secondary" type="button">选择图片</button>
+            </div>
+
+            <div id="previewArea" class="preview-area hidden">
+                <div>
+                    <p class="label">待检测图片</p>
+                    <img id="previewImage" alt="待检测图片预览">
+                </div>
+                <div class="actions">
+                    <button id="detectBtn" class="button primary" type="button">开始检测</button>
+                    <button id="resetBtn" class="button ghost" type="button">重新选择</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="loading" class="panel loading hidden">
+            <div class="spinner"></div>
+            <p>正在检测，请稍候...</p>
+        </section>
+
+        <section id="resultPanel" class="panel result-panel hidden">
+            <div class="section-title">
+                <div>
+                    <p class="eyebrow">Detection Result</p>
+                    <h2>检测结果</h2>
+                </div>
+                <div class="summary-wrap">
+                    <div id="summary" class="summary"></div>
+                    <div id="timeInfo" class="time-info hidden"></div>
+                </div>
+            </div>
+
+            <div id="batchResultPanel" class="batch-result-panel hidden">
+                <p class="label">批量检测结果</p>
+                <div id="batchResultGrid" class="batch-result-grid"></div>
+            </div>
+            <div id="singleResultGrid" class="result-grid">
+                <div>
+                    <p class="label">识别结果图</p>
+                    <img id="resultImage" alt="检测结果图">
+                </div>
+                <div>
+                    <p class="label">检测统计</p>
+                    <div id="statsPanel" class="stats-panel"></div>
+                    <p class="label" style="margin-top:16px">检测明细</p>
+                    <div id="detectionList" class="detection-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="errorPanel" class="error hidden"></section>
+    </main>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
